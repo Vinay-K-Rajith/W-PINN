@@ -1,0 +1,23 @@
+gear head-to-head baselines (N_F[wavelet]=4764, N_F[RBF]=4764 matched)
+
+===== rho = 10 =====
+  wavelet W-PINN (banded) : relL2=1.684e-03  Linf=1.149e-03  (742s)
+  RBF-PIELM eps=3.0       : relL2=7.570e-01  Linf=3.189e-01  (599s)
+  RBF-PIELM eps=5.0       : relL2=8.972e-02  Linf=3.334e-02  (968s)
+  RBF-PIELM eps=8.0       : relL2=1.194e-01  Linf=4.367e-02  (1105s)
+  RBF-PIELM eps=12.0      : relL2=1.398e-01  Linf=5.118e-02  (973s)
+  RBF-PIELM eps=18.0      : relL2=1.189e+00  Linf=1.196e+00  (798s)
+  XPINN-MLP (Adam 8k)     : relL2=2.651e+00  Linf=7.907e-01  (5426s)
+  vanilla MLP (Adam 8k)   : relL2=4.458e+00  Linf=1.103e+00  (5066s)
+
+===== rho = 1000 =====
+  wavelet W-PINN (banded) : relL2=1.015e-03  Linf=5.057e-04  (416s)
+  RBF-PIELM eps=3.0       : relL2=1.952e-01  Linf=9.819e-02  (383s)
+  RBF-PIELM eps=5.0       : relL2=1.606e-02  Linf=7.031e-03  (359s)
+  RBF-PIELM eps=8.0       : relL2=1.155e-02  Linf=8.675e-03  (386s)
+  RBF-PIELM eps=12.0      : relL2=1.097e-02  Linf=1.099e-02  (391s)
+  RBF-PIELM eps=18.0      : relL2=4.374e-01  Linf=1.057e+00  (419s)
+  XPINN-MLP (Adam 8k)     : relL2=1.966e+00  Linf=5.863e-01  (6297s)
+  vanilla MLP (Adam 8k)   : relL2=1.007e+00  Linf=3.038e-01  (5069s)
+
+saved baselines_results.json

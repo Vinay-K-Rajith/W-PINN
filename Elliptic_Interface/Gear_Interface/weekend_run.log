@@ -1,0 +1,36 @@
+﻿2026-06-20 12:30:45  === weekend_run START ===
+2026-06-20 12:30:45  SKIP convergence -- convergence_results.json already present
+2026-06-20 12:30:45  RUN  baselines : baselines_gear.py
+gear head-to-head baselines (N_F[wavelet]=4764, N_F[RBF]=4764 matched)
+
+===== rho = 10 =====
+  wavelet W-PINN (banded) : relL2=1.684e-03  Linf=1.149e-03  (389s)
+  RBF-PIELM eps=3.0       : relL2=7.570e-01  Linf=3.189e-01  (367s)
+  RBF-PIELM eps=5.0       : relL2=8.972e-02  Linf=3.334e-02  (385s)
+  RBF-PIELM eps=8.0       : relL2=1.194e-01  Linf=4.367e-02  (380s)
+  RBF-PIELM eps=12.0      : relL2=1.398e-01  Linf=5.118e-02  (386s)
+  RBF-PIELM eps=18.0      : relL2=1.189e+00  Linf=1.196e+00  (375s)
+  XPINN-MLP (Adam 8k)     : relL2=2.649e+00  Linf=7.898e-01  (6302s)
+  vanilla MLP (Adam 8k)   : relL2=4.451e+00  Linf=1.103e+00  (6026s)
+
+===== rho = 1000 =====
+  wavelet W-PINN (banded) : relL2=1.015e-03  Linf=5.057e-04  (383s)
+  RBF-PIELM eps=3.0       : relL2=1.952e-01  Linf=9.819e-02  (344s)
+  RBF-PIELM eps=5.0       : relL2=1.606e-02  Linf=7.031e-03  (372s)
+  RBF-PIELM eps=8.0       : relL2=1.155e-02  Linf=8.675e-03  (368s)
+  RBF-PIELM eps=12.0      : relL2=1.097e-02  Linf=1.099e-02  (345s)
+  RBF-PIELM eps=18.0      : relL2=4.374e-01  Linf=1.057e+00  (344s)
+  XPINN-MLP (Adam 8k)     : relL2=1.983e+00  Linf=5.898e-01  (6435s)
+  vanilla MLP (Adam 8k)   : relL2=1.006e+00  Linf=3.037e-01  (4800s)
+
+saved baselines_results.json
+2026-06-20 20:17:35  DONE baselines (python exit 0)
+2026-06-20 20:17:36  SKIP robustness -- robustness_results.json already present
+2026-06-20 20:17:36  RUN  make_paper_tables.py
+saved table_convergence.png
+saved table_baselines.png
+saved table_helmholtz.png
+saved table_contrast.png
+done.
+2026-06-20 20:17:38  DONE tables (python exit 0)
+2026-06-20 20:17:38  git add -A

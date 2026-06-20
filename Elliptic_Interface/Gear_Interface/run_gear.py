@@ -114,7 +114,7 @@ def make_points(K=140, M=720):
     return (xs[inside], ys[inside]), (xs[outside], ys[outside]), (xg, yg, nx, ny, nrm), (bx, by)
 
 # ----------------------------------------------------------------- AD-free least-squares solve
-def solve(rho, fam, wi=10.0, wb=10.0, tik=1e-10):
+def solve(rho, fam, wi=10.0, wb=10.0, tik=1e-10, want_cond=False):
     a_in, a_out = 1.0, rho*1.0
     jx, kx, jy, ky = fam; NF = jx.numel()
     (xm, ym), (xp, yp), (xg, yg, nx, ny, nrm), (bx, by) = make_points()
@@ -140,6 +140,7 @@ def solve(rho, fam, wi=10.0, wb=10.0, tik=1e-10):
     b = torch.cat([torch.tensor(-fin), torch.tensor(-fout),
                    torch.zeros(len(xg)), torch.zeros(len(xg)), math.sqrt(wb)*ub]).unsqueeze(1)
     s = A.norm(dim=0).clamp_min(1e-30); An = A/s                               # column normalisation
+    cond = torch.linalg.cond(An).item() if want_cond else float("nan")         # post-normalisation conditioning
     Aa = torch.cat([An, math.sqrt(tik)*torch.eye(n)]); bb = torch.cat([b, torch.zeros(n, 1)])
     theta = (torch.linalg.lstsq(Aa, bb, driver="gelsd").solution.squeeze(1))/s
     cM, cP = theta[:NF], theta[NF:2*NF]; bM, bP = theta[2*NF], theta[2*NF+1]
@@ -153,7 +154,8 @@ def solve(rho, fam, wi=10.0, wb=10.0, tik=1e-10):
                    MSE=np.mean(err**2), RMSE=np.sqrt(np.mean(err**2)),
                    MAE=np.mean(np.abs(err)), Linf=np.max(np.abs(err)),
                    relLinf=np.max(np.abs(err))/np.max(np.abs(ue)),
-                   kink=np.max(np.abs((dnG@cP).numpy() - (dnG@cM).numpy() - nrm*(1/a_out - 1/a_in))))
+                   kink=np.max(np.abs((dnG@cP).numpy() - (dnG@cM).numpy() - nrm*(1/a_out - 1/a_in))),
+                   cond=cond)
     return metrics, (Xt, Yt, pred.reshape(Xt.shape), ue.reshape(Xt.shape)), (xg, yg)
 
 # ----------------------------------------------------------------- run + figure

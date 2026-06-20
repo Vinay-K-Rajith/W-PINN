@@ -49,6 +49,26 @@ operational-matrix LSQ solve. relL2:
                                               with FEWER functions). 
 => adaptive banded multiresolution refinement is the cheap, decisive fix -- the durable edge, in 1D.
 
+## 4b. PHASE 2 RESULTS (2026-06-19) — thesis PROVEN in 1D; honest limits in 2D
+**1D decisive scale-separation sweep (the rigorous competitor proof)** — phase1_1d/decisive_scaletest.py,
+decisive.png, table_decisive.png. Banded wavelet W-PINN vs RBF-PIELM (best of 6 widths, MATCHED N_F),
+single sharp spike of width w on a smooth background, sweep w:
+  w=0.20: 3.2e-12 vs 6.7e-5 (5e6x) ; w=0.10: 7.4e-11 vs 4.2e-4 ; w=0.05: 2.1e-8 vs 1.1e-2 ;
+  w=0.02: 6.5e-5 vs 1.5e-1 (2340x) ; w=0.01: 2.8e-3 vs 1.4e-1 (48x) ; w=0.005: 3.0e-2 vs 1.0e-1 (3.4x).
+=> adaptive multiresolution beats fixed-width random features at EVERY scale; RBF-PIELM saturates at
+10-20% as scales separate (a fixed width + random centres cannot resolve spike AND background at a
+fixed budget). THIS is the clean, controlled headline result.
+
+**2D screened-Poisson, 4 bumps (widths 0.08..0.20), phase2_2d/run_phase2.py** (sol.png, compare.png,
+baselines.png, table.png, results.json): coarse [0,1,2] 1.99 -> medium [0,1,2,3] 0.23 -> banded
+[0,1,2,3]+[4,5]@bumps 0.10 (banded ablation works); banded (10%) < RBF-PIELM best-width (16%) -- thesis
+scales -- but vanilla PINN (4k Adam, 20x slower) reaches 3.5% on this MODERATE field.
+HONEST 2D LIMITS (important): (i) 2D accuracy ceiling ~1e-1 from operational-matrix CONDITIONING --
+adding levels 6+ DEGRADES the solution (48%), parsimony is the lever (same as interface Phase 1), not
+more levels; (ii) Gaussian bumps are the ideal case for Gaussian-RBF, an unusually strong competitor
+for that shape; (iii) at MODERATE 2D separation a trained MLP competes. The decisive multiresolution
+win needs STRONG scale separation (proven cleanly in 1D).
+
 ## 5. Phased plan
 - **Phase 2 — forward, harder:** (i) MANY sources at several scales in 1D/2D; (ii) 2D screened
   Poisson / Helmholtz with multi-scale localized loads; (iii) ablation vs uniform refinement and a

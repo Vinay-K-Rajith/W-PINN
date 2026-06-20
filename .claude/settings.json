@@ -40,7 +40,25 @@
       "Bash(python make_table.py)",
       "Bash(python -c \"import json; nb=json.load\\(open\\('WPINN_GearInterface.ipynb',encoding='utf-8'\\)\\); [print\\(''.join\\(o.get\\('text',[]\\)\\)\\) for c in nb['cells'] for o in c.get\\('outputs',[]\\) if o.get\\('output_type'\\)=='stream']\")",
       "Bash(python run_phase1_ide.py)",
-      "Bash(python run_phase1_multiscale.py)"
+      "Bash(python run_phase1_multiscale.py)",
+      "Bash(python -u run_phase2.py)",
+      "Bash(QUICK=1 python -u run_phase2.py)",
+      "Bash(python -u decisive_scaletest.py)",
+      "Bash(python plot_decisive.py)",
+      "WebFetch(domain:www.letpub.com)",
+      "Bash(python -c \"import torch,numpy,matplotlib,scipy; print\\('torch',torch.__version__,'np',numpy.__version__,'scipy ok'\\)\")",
+      "Bash(cat convergence_log.txt)",
+      "Bash(cat baselines_log.txt)",
+      "Bash(ls *.json)",
+      "Bash(cat robustness_log.txt)",
+      "Bash(ls -la *.json convergence.png)",
+      "Bash(tail -8 baselines_log.txt)",
+      "Bash(ls -la convergence_results.json convergence.png)",
+      "Bash(ls -la robustness_log.txt)",
+      "Bash(python -c \"import os;print\\('cores',os.cpu_count\\(\\)\\)\")",
+      "Bash(python -c \"import sys; print\\(sys.executable\\)\")",
+      "Bash(python -m py_compile convergence_study.py baselines_gear.py helmholtz_robustness.py make_paper_tables.py run_gear.py)",
+      "Bash(powershell -NoProfile -Command 'try { [scriptblock]::Create\\(\\(Get-Content -Raw weekend_run.ps1\\)\\) | Out-Null; '\\\\''PS1 PARSE OK'\\\\'' } catch { '\\\\''PS1 PARSE ERROR: '\\\\'' + $_.Exception.Message }')"
     ]
   }
 }
