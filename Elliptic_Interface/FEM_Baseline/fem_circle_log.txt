@@ -1,0 +1,36 @@
+Transforming over 1000 elements to C_CONTIGUOUS.
+
+===== conforming FEM (P1), circle r0=0.5, rho=10 =====
+       h     nDoF       relL2        Linf  solve_s
+
+  0.1000      545   1.617e-03   1.104e-03    0.013
+Transforming over 1000 vertices to C_CONTIGUOUS.
+Transforming over 1000 elements to C_CONTIGUOUS.
+
+  0.0500     2005   2.450e-04   2.800e-04    0.005
+Transforming over 1000 vertices to C_CONTIGUOUS.
+Transforming over 1000 elements to C_CONTIGUOUS.
+
+  0.0250     7692   4.572e-05   7.517e-05    0.026
+Transforming over 1000 vertices to C_CONTIGUOUS.
+Transforming over 1000 elements to C_CONTIGUOUS.
+
+  0.0125    30201   8.169e-06   1.818e-05    0.167
+Transforming over 1000 elements to C_CONTIGUOUS.
+
+===== conforming FEM (P1), circle r0=0.5, rho=1000 =====
+       h     nDoF       relL2        Linf  solve_s
+
+  0.1000      545   2.127e-03   1.087e-03    0.001
+Transforming over 1000 vertices to C_CONTIGUOUS.
+Transforming over 1000 elements to C_CONTIGUOUS.
+
+  0.0500     2005   3.199e-04   2.776e-04    0.005
+Transforming over 1000 vertices to C_CONTIGUOUS.
+Transforming over 1000 elements to C_CONTIGUOUS.
+
+  0.0250     7692   6.005e-05   7.593e-05    0.026
+Transforming over 1000 vertices to C_CONTIGUOUS.
+Transforming over 1000 elements to C_CONTIGUOUS.
+
+  0.0125    30201   1.080e-05   1.805e-05    0.160

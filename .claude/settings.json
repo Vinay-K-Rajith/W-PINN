@@ -58,7 +58,29 @@
       "Bash(python -c \"import os;print\\('cores',os.cpu_count\\(\\)\\)\")",
       "Bash(python -c \"import sys; print\\(sys.executable\\)\")",
       "Bash(python -m py_compile convergence_study.py baselines_gear.py helmholtz_robustness.py make_paper_tables.py run_gear.py)",
-      "Bash(powershell -NoProfile -Command 'try { [scriptblock]::Create\\(\\(Get-Content -Raw weekend_run.ps1\\)\\) | Out-Null; '\\\\''PS1 PARSE OK'\\\\'' } catch { '\\\\''PS1 PARSE ERROR: '\\\\'' + $_.Exception.Message }')"
+      "Bash(powershell -NoProfile -Command 'try { [scriptblock]::Create\\(\\(Get-Content -Raw weekend_run.ps1\\)\\) | Out-Null; '\\\\''PS1 PARSE OK'\\\\'' } catch { '\\\\''PS1 PARSE ERROR: '\\\\'' + $_.Exception.Message }')",
+      "Bash(python -c \"import torch, numpy; print\\('torch', torch.__version__, 'numpy', numpy.__version__\\)\")",
+      "Bash(python multi_inclusion.py)",
+      "Bash(python make_figure.py)",
+      "Bash(python -c \"import skfem; print\\('scikit-fem', skfem.__version__\\)\")",
+      "Bash(python -c \"import dolfin; print\\('fenics'\\)\")",
+      "Bash(python -c \"import scipy; print\\('scipy', scipy.__version__\\)\")",
+      "Bash(python -c \"import gmsh,meshio; print\\('gmsh ok'\\)\")",
+      "Bash(python inverse.py)",
+      "Bash(echo \"EXIT $?\")",
+      "Bash(python -c \"import gmsh\")",
+      "Bash(pip show *)",
+      "Bash(timeout 120 pip install gmsh meshio)",
+      "Bash(python -c ' *)",
+      "Bash(python -c \"import gmsh; print\\('gmsh', gmsh.__version__, 'OK'\\)\")",
+      "Bash(python -m pip install gmsh)",
+      "Bash(python -c \"import gmsh;print\\('gmsh',gmsh.__version__,'OK'\\)\")",
+      "Bash(python make_inverse_figure.py)",
+      "Bash(python rho_sweep.py)",
+      "Bash(python wavelet_circle.py)",
+      "Bash(python benchmark_ife.py)",
+      "WebFetch(domain:ar5iv.labs.arxiv.org)",
+      "Bash(python dcsnn_ex1.py)"
     ]
   }
 }

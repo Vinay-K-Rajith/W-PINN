@@ -1,0 +1,28 @@
+
+=== (1) main: 5 well-separated inclusions, contrast sweep ===
+NF_out=3177  NF_in=[203, 151, 179, 79, 131]  NF_total=3920
+rho=    10  relL2=3.33e-04  Linf=1.13e-03  ujump=2.57e-04  fjump=7.89e-03  per-incl=[6.3e-05 9.5e-05 1.0e-04 6.1e-05 2.8e-05]  cond=7.3e+26  41.6s
+rho=   100  relL2=1.02e-03  Linf=4.76e-03  ujump=3.31e-03  fjump=6.99e-03  per-incl=[4.9e-04 3.2e-04 7.9e-04 2.6e-04 4.4e-04]  cond=nan  41.6s
+rho=  1000  relL2=6.88e-04  Linf=5.98e-03  ujump=6.51e-03  fjump=5.19e-03  per-incl=[8.0e-04 2.7e-04 1.4e-03 3.3e-04 2.8e-04]  cond=nan  37.8s
+
+=== (2) hetero: each inclusion its own contrast (one solve) ===
+rho_i=[10.0, 100.0, 1000.0, 50.0, 500.0]
+relL2=1.67e-02  Linf=1.11e-01  ujump=1.99e-02  fjump=1.23e-01
+   inclusion 0  rho=    10  per-incl relL2=9.02e-03
+   inclusion 1  rho=   100  per-incl relL2=3.21e-03
+   inclusion 2  rho=  1000  per-incl relL2=5.73e-03
+   inclusion 3  rho=    50  per-incl relL2=4.02e-03
+   inclusion 4  rho=   500  per-incl relL2=4.61e-03
+
+=== (3) ablate: global-coarse basis vs + per-inclusion fine band (rho=1000) ===
+       coarse-only [0,1,2,3]  NF= 3243  relL2=6.93e-04  Linf=5.98e-03  fjump=5.15e-03  20.9s
+ coarse + radius-scaled band  NF= 3920  relL2=6.88e-04  Linf=5.98e-03  fjump=5.19e-03  57.4s
+
+=== (4) topo: m=2..6 inclusions, rho=100 (decomposition scales) ===
+m=2  NF= 3154  relL2=5.52e-04  worst-incl=5.49e-04  Linf=2.49e-03  279.1s
+m=3  NF= 3497  relL2=1.12e-03  worst-incl=8.62e-04  Linf=4.74e-03  180.5s
+m=4  NF= 3665  relL2=1.06e-03  worst-incl=8.12e-04  Linf=4.75e-03  198.4s
+m=5  NF= 3920  relL2=1.02e-03  worst-incl=7.90e-04  Linf=4.76e-03  188.8s
+m=6  NF= 4148  relL2=1.01e-03  worst-incl=7.95e-04  Linf=4.79e-03  37.9s
+
+All studies done in 1124s -> studies_results.json
