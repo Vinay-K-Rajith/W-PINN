@@ -46,8 +46,60 @@ hides (it reports only the linear solve, not meshing):
 3. **Sharp features** — the gear's tooth cusps need local mesh refinement for FEM; the wavelet uses a
    banded multiresolution basis (no mesh).
 
-So the answer to "is it competitive?" is: **yes, in the mesh-free / geometry-flexible regime;
-no, as a raw accuracy/speed replacement for FEM on a fixed smooth interface.**
+## Total-cost test for geometry-varying problems (`cost_comparison.py`) — the honest verdict
+
+We tested the strongest pro-mesh-free claim directly: a sweep over **12 geometries** (circle of varying
+radius, as an inverse/design loop would visit), FEM **remeshing every time** vs the wavelet method
+precomputing its matrix block once and re-solving. Matched ~1.5e-3 accuracy:
+
+| | total (12 geoms) | per-geometry | relL2 |
+|:--|--:|--:|--:|
+| FEM (conforming remesh each) | **0.58 s** | 0.048 s (0.042 s of it meshing) | 1.5e-3 |
+| wavelet (precompute + re-solve) | 68 s | 2.0 s once + 5.5 s/geom | 7.0e-3 |
+
+**FEM is ~100× faster even while remeshing every geometry — and more accurate.** Conforming meshing of
+a circle is trivial for gmsh (0.04 s); the wavelet SVD solve (5.5 s) is the bottleneck. **The mesh-free
+method does NOT win on wall-time, even for geometry-varying problems.** Do not make that claim.
+
+## So where does the wavelet method actually win? (honest positioning)
+
+**Not against FEM.** FEM beats it on accuracy, on per-solve speed, and on total cost even with remeshing,
+for these smooth-interface problems. The paper should NOT position the method as an FEM competitor.
+
+**Against other mesh-free / neural methods — decisively.** On the DCSNN benchmarks above it is ~7×–80×
+more accurate than the leading mesh-free NN, with a **single linear solve (no iterative training, no
+GPU, no hyper-parameter tuning)**. That is the genuine contribution: *a training-free, mesh-free
+least-squares solver that outperforms PINN/neural interface methods*. Frame the whole paper there.
+
+## Published-benchmark head-to-head — DCSNN Example 1 (`dcsnn_ex1.py`)
+
+Reproduces **Hu, Lin & Lai, *JCP* 2022, Example 1** exactly: ellipse `(x/0.2)²+(y/0.5)²=1`, contrast
+**β⁻/β⁺ = 1000** (β⁻=1, β⁺=1e-3), inhomogeneous jumps, exact `u⁻=eˣeʸ`, `u⁺=sin x sin y`.
+
+| method | L∞ error | relL2 | "dof" | how |
+|:-------|---------:|------:|------:|:----|
+| **wavelet W-PINN (this work)** | **6.04e-07** | 7.44e-07 | NF=5002 | one AD-free linear lstsq, 98 s CPU |
+| wavelet W-PINN (finer) | 3.64e-07 | 3.00e-07 | NF=12303 | one lstsq, 1216 s |
+| DCSNN (Hu-Lin-Lai 2022) | 4.39e-06 | — | 101 params | gradient-descent training |
+| IIM (their baseline) | ~comparable | — | ~65,792 | mesh-based |
+
+**DCSNN Example 2** (`dcsnn_ex2.py`) — **non-convex flower** interface `r=½+sin(5θ)/7`, β⁻/β⁺=10/1,
+`u⁻=e^(x²+y²)`, `u⁺=0.1(x²+y²)²−0.01·log(2r)`:
+
+| method | relL2 | L∞ | "dof" |
+|:-------|------:|----:|------:|
+| **wavelet W-PINN (this work)** | **3.20e-06** | 9.25e-06 | NF=5002 (113 s) |
+| DCSNN (Hu-Lin-Lai 2022) | 2.63e-04 | — | 501 params (trained) |
+
+→ **~80× more accurate than DCSNN** on a non-convex interface, single linear solve.
+
+**The wavelet method beats the leading mesh-free-NN method (DCSNN) on BOTH its 2D benchmarks (ellipse
+~7× in L∞, flower ~80× in relL2), using a single linear solve (no training, no GPU)**, at far fewer
+unknowns than the IIM mesh.
+Honest caveat: DCSNN uses only 101 parameters (far more parameter-efficient); the wavelet trade is
+a larger but still modest basis in exchange for being non-iterative/AD-free. This O(1)-amplitude,
+contrast-1000 single-interface case is solved to 6e-7 — so the ρ≤0.01 degradation seen in the
+5-inclusion sweep is a multi-inclusion *conditioning* effect, not an intrinsic high-contrast limit.
 
 ## Standard-benchmark check
 

@@ -80,7 +80,9 @@
       "Bash(python wavelet_circle.py)",
       "Bash(python benchmark_ife.py)",
       "WebFetch(domain:ar5iv.labs.arxiv.org)",
-      "Bash(python dcsnn_ex1.py)"
+      "Bash(python dcsnn_ex1.py)",
+      "Bash(python dcsnn_ex2.py)",
+      "Bash(python cost_comparison.py)"
     ]
   }
 }
