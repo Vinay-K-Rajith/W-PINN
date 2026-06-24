@@ -1,1 +1,0 @@
-﻿weekend_run finished 2026-06-20 20:17:43  (git push exit=0 -- 0 means pushed OK)

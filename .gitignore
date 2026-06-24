@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# gmsh / meshio scratch output
+*_circ.msh
+_c.msh
+_circ.msh
+
+# run logs / scratch markers
+*_log.txt
+*DONE*.txt

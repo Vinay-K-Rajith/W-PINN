@@ -69,6 +69,41 @@ more levels; (ii) Gaussian bumps are the ideal case for Gaussian-RBF, an unusual
 for that shape; (iii) at MODERATE 2D separation a trained MLP competes. The decisive multiresolution
 win needs STRONG scale separation (proven cleanly in 1D).
 
+## 4c. PHASE 2 — AUTOMATIC residual-greedy refinement (2026-06-24) — the sharpened headline
+After a fresh lit pass (June 2026), "wavelet multiresolution for multiscale" is now CROWDED (source
+paper arXiv:2409.11847 + PIMWNN CPC 2025 S0010465525004874 + wavelet-quantum-PINN arXiv:2512.08256),
+and "sparse multiresolution inverse source" overlaps mature weighted-sparsity source-ID work
+(arXiv:2206.06069/2212.04187/2012.11280) and CORSING wavelet compressed-sensing PDE solves. The
+manual banded refinement (place finest wavelets where you ALREADY know the spike is) is the weak point
+a reviewer attacks and the inverse problem forbids. THE FIX = make refinement AUTOMATIC and residual-
+driven: matching pursuit / weak-greedy on the PDE-OPERATOR dictionary -- score each candidate wavelet
+by |a_i . r|/||a_i|| (a_i = operator column, r = PDE residual), add top-batch, re-solve. AD-free makes
+this cheap (residual + all correlations are matrix products of pre-stored operator columns). THEORY
+MOAT vs RFM/PIELM: structured multiresolution dictionary => best-N-term / weak-greedy a-posteriori
+optimality, which single-scale random features provably lack.
+
+RESULT (phase1_1d/greedy_residual.py, greedy.png, greedy_results.json) -- SAME 1D problem, spike
+location x0 NOT given to the selector:
+  coarse [0,1,2,3]            NF= 35  relL2 1.16e-1
+  uniform fine [0..5]         NF=133  relL2 2.51e-2
+  oracle band[6,7,8]@spike    NF=124  relL2 4.29e-4   (MANUAL, knows x0)
+  GREEDY (auto, no x0)        NF=113  relL2 9.36e-6   <-- BEATS the oracle ~46x at FEWER functions
+The greedy DISCOVERS the spike: finest level (l=8) atoms are 67% within 0.1 of x0, l=7 58%, l=6 24%
+(a refinement pyramid centred on x0 -- greedy.png panel b). This is the paper's Figure 1: automatic
+residual-driven multiresolution refinement, no a-priori location, beating the manual oracle.
+NEXT: (i) carry into 2D, where the conditioning ceiling (~1e-1) blocks deep levels -> add RRQR local-
+feature filtering + preconditioning (arXiv:2506.17626, cond -11 orders) so the greedy can use fine
+levels in 2D; (ii) the SAME residual-greedy selector becomes the inverse source-count/location detector.
+
+2D CEILING DIAGNOSED (2026-06-24, phase2_2d/diagnose_*.py + rrqr_2d.py, results.md §2):
+the old ~0.10 ceiling is a residual-to-error STABILITY/REGULARIZATION effect, NOT the basis (best-fit
+L2-projection reaches 2e-2, even 7e-3 with Gaussian atoms), NOT raw conditioning (RRQR cuts cond -9
+orders 3.5e17->4e8 with NO accuracy gain, but HALVES the basis = efficiency win), and NOT collocation
+aliasing (denser grid monotonically WORSENS: 4.5e-2 @K120 -> 9.4e-2 @K220). The lever is Tikhonov
+strength: tik=1e-6 + modest K gives relL2 4.48e-2 -- below the old 0.10 and COMPETITIVE with the trained
+vanilla PINN (3.5e-2) via one linear solve. Open refinement: a solution-selection regularizer (norm-/fit-
+anchored) to reach the 2e-2 best-fit floor. So 2D is no longer a clear loss; it's competitive-with-PINN.
+
 ## 5. Phased plan
 - **Phase 2 — forward, harder:** (i) MANY sources at several scales in 1D/2D; (ii) 2D screened
   Poisson / Helmholtz with multi-scale localized loads; (iii) ablation vs uniform refinement and a

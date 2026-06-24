@@ -82,7 +82,16 @@
       "WebFetch(domain:ar5iv.labs.arxiv.org)",
       "Bash(python dcsnn_ex1.py)",
       "Bash(python dcsnn_ex2.py)",
-      "Bash(python cost_comparison.py)"
+      "Bash(python cost_comparison.py)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(python greedy_residual.py)",
+      "Bash(python plot_greedy.py)",
+      "Bash(python rrqr_2d.py)",
+      "Bash(python diagnose_ceiling.py)",
+      "Bash(python diagnose_solve.py)",
+      "PowerShell(Stop-Process -Id 16896 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(taskkill /PID 16896 /F)",
+      "Bash(taskkill /PID 14080 /F)"
     ]
   }
 }
